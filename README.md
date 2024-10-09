@@ -6,6 +6,12 @@
 - Node.js
 - Docker (optional, for running the app in containers)
 
+## Installation using script.sh file
+   ```bash
+   chmod +x setup.sh
+   ./setup.sh
+   ```
+
 ## Installation
 
 1. Clone the repository:
