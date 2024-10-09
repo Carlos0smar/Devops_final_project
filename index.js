@@ -1,27 +1,27 @@
 const express = require('express');
-const mysql = require('mysql2');
 const app = express();
 const port = 3000;
 
-
 app.use(express.json());
+
+let items = [];
+let nextId = 1;
 
 
 app.post('/items', (req, res) => {
     const { name, description, price } = req.body;
-    const query = 'INSERT INTO items (name, description, price) VALUES (?, ?, ?)';
-    db.query(query, [name, description, price], (err, result) => {
-        if (err) {
-            console.error('Error insertando el item:', err);
-            return res.status(500).send('Error al crear el item');
-        }
-        res.status(201).send({ id: result.insertId, name, description, price });
+    const newItem = { id: nextId++, name, description, price };
+    items.push(newItem);
+    res.status(201).send(newItem);
+});
+
+
+
+if (process.env.NODE_ENV !== 'test') {
+    app.listen(port, () => {
+        console.log(`Servidor escuchando en http://localhost:${port}`);
     });
-});
+}
 
 
-
-
-app.listen(port, () => {
-    console.log(`Servidor escuchando en http://localhost:${port}`);
-});
+module.exports = app;
